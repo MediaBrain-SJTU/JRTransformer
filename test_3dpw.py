@@ -7,7 +7,7 @@ from dataset.dataset_3dpw import batch_denormalization, SoMoFDataset_3dpw_test
 from model.model import JRTransformer
 
 from torch.utils.data import DataLoader, SequentialSampler, DataLoader
-from utils.config_3dpw import parse_args
+from utils.config_3dpw import *
 from utils.metrics import batch_MPJPE, batch_VIM
 from utils.util import get_adj, get_connect
 
@@ -33,7 +33,7 @@ class Tester:
                                    num_heads=args.num_heads, depth=args.depth).to(self.device)
         
         self.rc = args.rc
-        dset_test = SoMoFDataset_3dpw_test(seq_len=args.input_length+args.output_length)
+        dset_test = SoMoFDataset_3dpw_test(dset_path=somof_3dpw_test_data, seq_len=args.input_length+args.output_length, N=args.N, J=args.J)
         sampler_test = SequentialSampler(dset_test)
         self.test_loader = DataLoader(dset_test, sampler=sampler_test, batch_size=args.batch_size, num_workers=2, drop_last=False, pin_memory=True)
         

@@ -3,12 +3,10 @@ import os
 
 ## path
 original_3dpw_dir = 'data/3DPW/'
-preprocess_3dpw_train_data = 'data/somof_3dpw/poseData.pkl'
-preprocess_3dpw_rc_train_data = 'data/somof_3dpw/poseData_RC.pkl'
+preprocess_3dpw_train_data = 'data/poseData.pkl'
 somof_3dpw_test_data = 'data/test_in.json'
-preprocess_3dpw_rc_test_data = 'data/test_rc_in.json'
 AMASS_dir = '/DB/public/AMASS/'
-skel_path = 'dataset/smpl_skeleton.npz'
+skel_path = 'data/smpl_skeleton.npz'
 
 ## data
 dataset_skip = 2
@@ -34,7 +32,7 @@ gamma = 0.8
 
 cuda_devices = '0'
 pretrain_path = ''
-model_path = ''
+model_path = 'output/best_3dpw.pt'
 weight_loss_pred = 10.0
 weight_loss_recon = 1.0
 weight_loss_aux = 1.0
@@ -107,11 +105,11 @@ def parse_args():
     parser.add_argument('--pretrain_path',
                         type=str,
                         default=pretrain_path,
-                        help='pretrain model path')
+                        help='path of the model pretrained on AMASS')
     parser.add_argument('--model_path',
                         type=str,
                         default=model_path,
-                        help='model path')
+                        help='path of the model finetuned on 3dpw')
     
     parser.add_argument('--weight_loss_pred',
                         type=float,
@@ -166,8 +164,9 @@ def parse_args():
                         default=strike,
                         help='number of frames that we have to skip')
     parser.add_argument('--rc',
-                        action="store_true",
-                        help='use point normal')
+                        type=bool,
+                        default=True,
+                        help='whether to remove camera movement')
     parser.add_argument('--input_length', 
                         type=int, 
                         default=input_length,
