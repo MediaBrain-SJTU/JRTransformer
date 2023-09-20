@@ -33,5 +33,5 @@ python pretrain_amass.py
 ```
 and then finetune on the 3DPW-SoMoF/RC dataset with 
 ```
-python train_3dpw --pretrain_path ./path/to/pretrained/model.pt
+python train_3dpw.py --pretrain_path ./path/to/pretrained/model.pt
 ```
